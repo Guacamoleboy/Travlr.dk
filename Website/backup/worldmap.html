@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+
+    <!-- Meta -->
+    <meta charset="UTF-8"> <!-- ÆØÅ -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- In case some nerd uses Internet Explorer -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile Responsiveness -->
+    <meta name="description" content="Yea ngl I hate life. Let's get it!"> <!-- SEO / Google -->
+    <meta name="author" content="Guacamoleboy"> <!-- Author of Website -->
+
+    <!-- Visuals -->
+    <title>BeyondBorders</title>
+
+    <!-- Icon -->
+    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- CSS Load -->
+    <link rel="stylesheet" href="assets/css/guacamoleboy-wow.css">
+    <link rel="stylesheet" href="assets/css/guacamoleboy-framework.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- leaflet Load -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+
+    <!-- Map Load -->
+    <link rel="stylesheet" href="assets/css/worldmap.css">
+    <script src="assets/js/worldmap.js" defer></script>
+
+    <!-- Scripts -->
+    <script src="assets/js/overlay.js" defer></script>
+
+
+</head>
+<body>
+
+    <!-- Map Start -->
+    <div id="map"></div>
+    <!-- Map End -->
+
+    <!-- Menu Start -->
+    <section>
+        <div class="guac-container">
+            <div class="guac-row">
+
+            <!-- Left navbar Start -->
+            <nav class="guac-navbar-bottom guac-navbar-bottom-left">
+                <a href="#" id="settingsButton"><img src="assets/images/icons/settings.png"></a>
+            </nav>
+            <!-- Left navbar End -->
+
+            <!-- Overlay Start -->
+            <div id="settingsOverlay">
+
+                <!-- Exit Button Start -->
+                <a href="#" class="exit-btn" id="closeOverlay" title="Luk">&#10006;</a>
+                <!-- Exit Button End -->
+
+                <div class="overlay-content">
+                    <h2 class="overlay-title">Settings</h2>
+
+                    <!-- Start Zoom Start -->
+                    <div class="setting-item">
+                        <label for="startZoom">Start Zoom</label>
+                        <input type="range" id="startZoom" name="startZoom" min="3" max="10" value="5">
+                        <span id="zoomValue">5</span>
+                    </div>
+                    <!-- Start Zoom End -->
+
+                    <!-- Sprog Dropdown Start -->
+                    <div class="setting-item">
+                        <label for="languageSelect">Sprog</label>
+                        <select id="languageSelect" name="languageSelect">
+                            <option value="da">Dansk</option>
+                            <option value="en">English</option>
+                            <option value="de">Deutsch</option>
+                            <option value="es">Dinmor</option>
+                            <option value="fr">Français</option>
+                            <option value="es">Español</option>
+                        </select>
+                    </div>
+                    <!-- Sprog Dropdown End -->
+
+                </div>
+
+
+            </div>
+            <!-- Overlay End -->
+            
+            <!-- Center navbar Start -->
+            <nav class="guac-navbar-bottom">
+                <a href="#"><img src="assets/images/icons/profile.png"></a>
+                <a href="#"><img src="assets/images/icons/message.png"></a>
+                <a href="#"><img src="assets/images/icons/star-1.png"></a>
+                <a href="#"><img src="assets/images/icons/review-2.png"></a>
+                <a href="#"><img src="assets/images/icons/group-chat-2.png"></a>
+            </nav>
+            <!-- Center navbar End -->
+
+            <!-- Right navbar Start -->
+            <nav class="guac-navbar-bottom guac-navbar-bottom-right">
+                <a href="#"><img src="assets/images/icons/pin-1.png"></a>
+                <a href="#"><img src="assets/images/icons/erase.png"></a>
+            </nav>
+            <!-- Right navbar End -->
+
+            </div> 
+        </div> 
+    </section>
+    <!-- Menu End -->
+
+    <!-- Scripts without "defer" loads on website load -->
+    <script src="assets/js/guacamoleboy-wow.js"></script>
+
+</body>
+</html>

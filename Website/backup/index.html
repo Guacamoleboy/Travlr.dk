@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+
+    <!-- Meta -->
+    <meta charset="UTF-8"> <!-- ÆØÅ -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- In case some nerd uses Internet Explorer -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile Responsiveness -->
+    <meta name="description" content="Yea ngl I hate life. Let's get it!"> <!-- SEO / Google -->
+    <meta name="author" content="Guacamoleboy"> <!-- Author of Website -->
+
+    <!-- Visuals -->
+    <title>BeyondBound.dk</title>
+
+    <!-- Icon -->
+    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="apple-touch-icon" href="#">
+
+    <!-- CSS Load -->
+    <link rel="stylesheet" href="assets/css/guacamoleboy-wow.css">
+    <link rel="stylesheet" href="assets/css/guacamoleboy-framework.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-4.7.0.min.css">
+
+    <!-- leaflet Load -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+
+    <!-- Map Load -->
+    <link rel="stylesheet" href="assets/css/worldmap.css">
+    <script src="assets/js/worldmap.js" defer></script>
+
+    <!-- Scripts -->
+    <script src="assets/js/guacamoleboy-wow.js" defer></script>
+    <script src="assets/js/overlay.js" defer></script>
+
+</head>
+<body>
+
+    <!-- Map Start -->
+    <div id="map"></div>
+    <!-- Map End -->
+
+    <!-- Login Overlay Start -->
+    <div id="loginOverlay">
+        <div class="login-content">
+            <h2 class="overlay-title">Woa.. Hold on!<br>You're not logged in</h2>
+            <div class="login-field">
+                <input type="text" id="username" name="username" placeholder="Username">
+            </div>
+            <div class="login-field">
+                <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="login-buttons">
+                <button id="loginButton" class="guac-btn guac-btn-orange">Go!</button>
+                <button id="createAccountButton" class="guac-btn guac-btn-orange">Create Account</button>
+            </div>
+        </div>
+    </div>
+    <!-- Login Overlay End -->
+
+    <!-- Create Account Overlay Start -->
+    <div id="createOverlay">
+        <div class="login-content">
+            <h2 class="overlay-title">Create Account</h2>
+            <div class="login-field">
+                <input type="text" id="newUsername" name="newUsername" placeholder="Username">
+            </div>
+            <div class="login-field">
+                <input type="password" id="newPassword" name="newPassword" placeholder="Password">
+            </div>
+            <div class="login-field">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+            </div>
+            <div class="login-field">
+                <input type="email" id="newEmail" name="newEmail" placeholder="Your Email">
+            </div>
+            <div class="login-buttons">
+                <button id="createButton" class="guac-btn guac-btn-orange">Create Account</button>
+                <button id="backToLoginButton" class="guac-btn guac-btn-orange">Back</button>
+            </div>
+        </div>
+    </div>
+    <!-- Create Account Overlay End -->
+
+    <!-- Menu Start -->
+    <section>
+        <div class="guac-container">
+            <div class="guac-row">
+
+            <!-- Left navbar Start -->
+            <nav class="guac-navbar-bottom guac-navbar-bottom-left">
+                <a href="#" id="settingsButton"><i class="fa fa-cog"></i></a>
+            </nav>
+            <!-- Left navbar End -->
+
+            <!-- Overlay Start -->
+            <div id="settingsOverlay">
+
+                <!-- Exit Button Start -->
+                <a href="#" class="exit-btn" id="closeOverlay" title="Luk">&#10006;</a>
+                <!-- Exit Button End -->
+
+                <div class="overlay-content">
+                    <h2 class="overlay-title">Settings</h2>
+
+                    <!-- Start Zoom Start -->
+                    <div class="setting-item">
+                        <label for="startZoom">Start Zoom</label>
+                        <input type="range" id="startZoom" name="startZoom" min="3" max="10" value="5">
+                        <span id="zoomValue">5</span>
+                    </div>
+                    <!-- Start Zoom End -->
+
+                    <!-- Sprog Dropdown Start -->
+                    <div class="setting-item">
+                        <label for="languageSelect">Sprog</label>
+                        <select id="languageSelect" name="languageSelect">
+                            <option value="da">Dansk</option>
+                            <option value="en">English</option>
+                            <option value="de">Deutsch</option>
+                            <option value="es">Dinmor</option>
+                            <option value="fr">Français</option>
+                            <option value="es">Español</option>
+                        </select>
+                    </div>
+                    <!-- Sprog Dropdown End -->
+
+                </div>
+            </div>
+            <!-- Overlay End -->
+            
+            <!-- Center navbar Start -->
+            <nav class="guac-navbar-bottom">
+                <a href="#"><i class="fa fa-user"></i></a>      
+                <a href="#"><i class="fa fa-envelope"></i></a>   
+                <a href="#"><i class="fa fa-star"></i></a>       
+                <a href="#"><i class="fa fa-pencil"></i></a>   
+                <a href="#"><i class="fa fa-users"></i></a>
+            </nav>
+            <!-- Center navbar End -->
+
+            <!-- Right navbar Start -->
+            <nav class="guac-navbar-bottom guac-navbar-bottom-right">
+                <a href="#" id="pinButton"><i class="fa fa-map-pin"></i></a>
+                <a href="#" id="eraserButton"><i class="fa fa-trash"></i></a>
+            </nav>
+            <!-- Right navbar End -->
+
+            </div> 
+        </div> 
+    </section>
+    <!-- Menu End -->
+
+    <!-- Notifications Start -->
+        <section>
+            <div id="guac-notification-container"></div>
+        </section>
+    <!-- Notifications End -->
+
+</body>
+</html>

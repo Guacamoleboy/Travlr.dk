@@ -1,0 +1,538 @@
+/* ______________________________________________ */
+
+			    /* Bottom Navbar Floating */
+/* ______________________________________________ */
+
+.guac-navbar-bottom,
+.guac-navbar-bottom-right,
+.guac-navbar-bottom-left,
+.guac-navbar-bottom-wish {
+  position: fixed;
+  bottom: 2rem;
+  background: rgba(255, 255, 255, 0.137);
+  backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  border: 2px solid #c2c2c2;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.guac-navbar-bottom img,
+.guac-navbar-bottom-right img,
+.guac-navbar-bottom-left img {
+  width: 2rem;
+  height: auto;
+  padding-top: 0.4rem;
+}
+
+.guac-navbar-bottom {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.guac-navbar-bottom-right {
+  transform: translateX(130%);
+}
+
+.guac-navbar-bottom-left {
+  left: 2rem;
+  transform: none;
+  position: absolute;
+}
+
+.guac-navbar-bottom-wish {
+  width: 6.5rem !important;
+  position: fixed;       
+  bottom: 2rem;         
+  transform: translateX(-205%);
+}
+
+.guac-navbar-bottom-wish-inner {
+  position: relative;   
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wish-dropdown {
+  position: fixed;             
+  bottom: 4.5rem !important;              
+  left: 5% !important;                
+  transform: translateX(-50%);
+  width: 6rem;                
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25) !important;
+  display: none;              
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  z-index: 2000;
+}
+
+.wish-dropdown.show {
+  display: flex;
+}
+
+.wish-text {
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.guac-navbar-bottom-wish:hover .wish-text {
+  opacity: 1;
+  color: rgb(82, 82, 82);
+}
+
+.guac-navbar-bottom-wish a {
+  text-decoration: none;
+}
+
+.guac-navbar-bottom-wish a:visited,
+.guac-navbar-bottom-wish a:active {
+  text-decoration: none;
+}
+
+.wish-dropdown {
+  position: fixed; 
+  bottom: 6rem; 
+  left: 33.5%; 
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  box-shadow: 0 -6px 10px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  z-index: 2000;
+}
+
+.wish-dropdown.active {
+  display: flex;
+}
+
+.wish-option {
+  font-size: 0.8rem;
+  text-align: center;
+  text-decoration: none;
+  color: #777777;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+}
+
+.wish-option:hover {
+  background: rgba(121, 121, 121, 0.2);
+  color: #4e4e4e;
+}
+
+.wish-option.selected {
+  background: rgba(121, 121, 121, 0.2);
+  color: #474747;
+}
+
+.guac-navbar-bottom-right a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;      
+    height: 1.5rem;     
+    text-decoration: none;
+    color: inherit;
+}
+
+.guac-navbar-bottom-right a:last-child {
+    margin-left: -0.5rem;
+}
+
+.guac-navbar-bottom-right a i {
+    font-size: 1.5rem !important;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* ______________________________________________ */
+
+			           /* Settings */
+/* ______________________________________________ */
+
+#settingsOverlay {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 2000;
+    padding-top: 2rem;
+}
+
+#settingsOverlay.initial {
+    transition: none;
+}
+
+#settingsOverlay.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#closeOverlay {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.overlay-content {
+    margin-top: 4rem;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.setting-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.setting-item .guac-btn-orange {
+    font-weight: bold !important;
+    color: #272727 !important;
+    transition: transform 0.2s ease-in-out;
+}
+
+.setting-item .guac-btn-orange:hover {
+    font-weight: bold !important;
+    color: #131313 !important;
+    transform: scale(1.05);
+}
+
+.setting-item .change-buttons {
+    display: flex;
+    gap: 0.5rem; 
+    justify-content: center; 
+    transition: transform 0.2s ease-in-out;
+}
+
+.setting-item .change-buttons button {
+    padding: 0.4rem 0.8rem;
+}
+
+.setting-item::before {
+    content: '';
+    display: block;
+    width: 25%;             
+    border-top: 2px dashed rgba(255, 255, 255, 0.2); 
+    margin: 0 0 0.5rem 0;    
+}
+
+.setting-item .change-buttons button:hover {
+    transform: scale(1.05);
+}
+
+.setting-item.no-line::before {
+    content: none !important;
+}
+
+.setting-item label {
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;   
+    display: block;       
+    color: #fff;
+}
+
+#startZoom {
+    width: 80%;
+}
+
+#zoomValue {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-weight: normal;
+    color: #f8b600;
+}
+
+#languageSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;   
+    appearance: none;        
+    background-image: none;   
+    width: 40%;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.overlay-title {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem; 
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 4px 3px 2px rgba(0,0,0,0.4);
+}
+
+.overlay-title::after {
+    content: '';
+    display: block;
+    width: 75%; 
+    height: 4px; 
+    background-color: #f8b600;
+    margin: 1.5rem auto 0; 
+    border-radius: 2px; 
+}
+
+/* ______________________________________________ */
+
+			    /* Exit Button */
+/* ______________________________________________ */
+
+.exit-btn {
+    position: absolute;
+    top: 3rem !important;         
+    left: 1rem;
+    z-index: 10000;
+    background-color: #afafaf !important;
+    color: #000000 !important;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.25rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.exit-btn:hover {
+    background-color: #f8b600 !important;
+    color: #3b3b3b !important;
+    transform: scale(1.1) !important;
+}
+
+/* ______________________________________________ */
+
+			    /* Navbar Icon */
+/* ______________________________________________ */
+
+.guac-navbar-bottom i.fa,
+.guac-navbar-bottom-right i.fa,
+#pinButton i.fa,
+#eraserButton i.fa,
+#settingsButton i.fa,
+.guac-navbar-bottom i.fa.fa-star {
+    font-size: 1.5rem;
+    color: #494949;
+    margin: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.guac-navbar-bottom i.fa:hover {
+    color: #7e7e7e !important;
+    transform: scale(1.1);
+}
+
+.guac-navbar-bottom-right i.fa:hover {
+    transform: scale(1.1);
+}
+
+#pinButton i.fa:hover,
+#pinButton.active i.fa {
+    color: red !important;
+    transform: scale(1.2);
+}
+
+#eraserButton.active i.fa {
+    color: red !important;
+    transform: scale(1.2);
+}
+
+.guac-navbar-bottom i.fa.fa-star:hover {
+    color: #ffb007 !important;
+    transform: scale(1.2);
+}
+
+#settingsButton i.fa:hover {
+    transform: rotate(45deg);
+}
+
+/* ______________________________________________ */
+
+			   /* Login overlay */
+/* ______________________________________________ */
+
+#loginOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+}
+
+.login-content {
+    background: rgba(100, 118, 199, 0.95);
+    border: 5px outset rgba(76, 87, 139, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    transition: transform 0.3s ease;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 15px;
+    box-shadow: 6px 6px 15px rgba(0,0,0,0.5), 3px 3px 6px rgba(0,0,0,0.4);
+}
+
+.login-field input {
+    padding: 0.5rem;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #424242;
+    width: 100%;
+    max-width: 25rem;
+    box-sizing: border-box;
+    transition: border 0.2s ease;
+}
+
+.login-field input:focus,
+.login-field input:active {
+    outline: none;
+    border: 3px solid #f8b600;
+}
+
+.login-buttons {
+    display: flex;
+    gap: 1rem; 
+    justify-content: center; 
+}
+
+.login-buttons button {
+    flex: 1;
+    font-weight: bold;
+    color: #2b2b2b;
+    width: 100%;
+    max-width: 25rem;
+    box-sizing: border-box;
+}
+
+/* ______________________________________________ */
+
+			    /* Additional */
+/* ______________________________________________ */
+
+.guac-btn-orange {
+    background-color: #f8b600 !important;
+    border-radius: 15px;
+    border: 2px solid #cf9801;
+    transition: background-color 0.2s ease, border 0.2s ease;
+}
+
+.guac-btn-orange:hover {
+    background-color: #b9b7b3 !important;
+    border: 2px solid #797878;
+}
+
+.login-field input::placeholder {
+    font-weight: bold;
+    color: #929292;
+}
+
+/* ______________________________________________ */
+
+			  /* Create Account */
+/* ______________________________________________ */
+
+#createOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    display: none;
+}
+
+/* ______________________________________________ */
+
+			 /* Responsive Tablet */
+/* ______________________________________________ */
+
+@media screen and (max-width: 1024px) {
+    .guac-navbar-bottom-right {
+        gap: 0.7rem;
+        left: 75%;          
+        transform: translateX(-50%);
+    }
+
+    .guac-navbar-bottom-left {
+        gap: 0.7rem;
+        left: 10%;         
+        transform: translateX(-50%);
+    }
+
+    .guac-navbar-bottom-left a,
+    .guac-navbar-bottom-right a {
+        font-size: 1rem; 
+    }
+}
