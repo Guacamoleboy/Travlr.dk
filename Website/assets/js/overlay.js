@@ -131,6 +131,12 @@ loginButton.addEventListener('click', async (e) => {
         if (result.success) {
             loginOverlay.style.display = 'none';
             showNotification("Login success!", "success");
+
+            loggedInUser = result.username || username; 
+
+            clearMapPins();
+            loadMarkers();
+
         } else {
             showNotification(result.message || "Wrong credentials", "danger");
         }

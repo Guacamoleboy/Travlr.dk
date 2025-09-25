@@ -30,7 +30,7 @@ const map = L.map('map', {
 });
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: 'BeyondBound | Build: 0.1.0 | Release at 1.0.0',
+    attribution: 'Travlr.dk | Build: 0.1.1 | Release at 1.0.0',
     subdomains: 'abcd',
     maxZoom: 15
 }).addTo(map);
