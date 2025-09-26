@@ -14,6 +14,11 @@ const createAccountButton = document.getElementById('createAccountButton');
 const backToLoginButton = document.getElementById('backToLoginButton');
 const createButton = document.getElementById('createButton');
 const logoutButton = document.getElementById('logoutButton');
+const createRouteButton = document.getElementById('createRoute');
+const cancelRouteButton = document.getElementById('cancelRoute');
+
+const rightNavbar = document.querySelector('.guac-navbar-bottom-right');
+const rightNavbarHidden = document.querySelector('.guac-navbar-bottom-right-hidden');
 
 settingsButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -40,6 +45,48 @@ createAccountButton.addEventListener('click', () => {
 backToLoginButton.addEventListener('click', () => {
     createOverlay.style.display = 'none';
     loginOverlay.style.display = 'flex';
+});
+
+cancelRouteButton.addEventListener('click', () => {
+    createRouteOverlay.style.display = 'none';
+});
+
+createRouteButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('routeTitle').value.trim();
+    const description = document.getElementById('routeDesc').value.trim();
+
+    if (!title) {
+        showNotification("Please enter a title for your route", "danger");
+        return;
+    }
+
+    try {
+        const response = await fetch('php/create_sport.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ title, description })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showNotification("Route created successfully!", "success");
+            createRouteOverlay.style.display = 'none';
+
+            const newRouteId = result.route_id;
+
+        } else {
+            showNotification(result.message || "Failed to create route", "danger");
+        }
+
+    } catch (err) {
+        console.error("Create Route request failed:", err);
+        showNotification("Create Route request failed", "danger");
+    }
 });
 
 createButton.addEventListener('click', async (e) => {
@@ -213,6 +260,16 @@ function updatePinIcon(mode) {
     icon.className = 'fa ' + icons[mode]; 
 }
 
+startButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if (createRouteOverlay.style.display === 'none' || createRouteOverlay.style.display === '') {
+        createRouteOverlay.style.display = 'flex';
+    } else {
+        createRouteOverlay.style.display = 'none';
+    }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const wishButton = document.getElementById("wishButton");
     const wishDropdown = document.getElementById("wishDropdown");
@@ -244,8 +301,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const mode = option.dataset.mode;
             currentMode = mode; 
 
+            // Update pin icon
             updatePinIcon(mode);
             updateMapZoomForMode(mode);
+
+            if (mode === 'S') {
+                rightNavbar.style.display = 'none';              
+                rightNavbarHidden.style.display = 'flex';        
+            } else {
+                rightNavbar.style.display = 'flex';              
+                rightNavbarHidden.style.display = 'none';      
+            }
 
             try {
                 const response = await fetch(`php/get_pins.php?mode=${mode}`);
@@ -259,4 +325,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    createRouteOverlay.style.display = 'none';
 });
