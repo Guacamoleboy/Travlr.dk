@@ -1,12 +1,22 @@
 const startZoom = document.getElementById('startZoom');
 const zoomValue = document.getElementById('zoomValue');
 
-let currentMode = 'V'; // Default: Visited
+let currentMode = 'V';
+let cityData = [];
+
+const cityCoordinates = {
+    "Copenhagen": [55.6761, 12.5683],
+    "London": [51.5074, -0.1278],
+    "Rome": [41.9028, 12.4964],
+    "Berlin": [52.52, 13.405],
+    "Paris": [48.8566, 2.3522]
+};
 
 const settingsOverlay = document.getElementById('settingsOverlay');
 const closeOverlay = document.getElementById('closeOverlay');
 const loginOverlay = document.getElementById('loginOverlay');
 const createOverlay = document.getElementById('createOverlay');
+const createPlanOverlay = document.getElementById('createPlanOverlay');
 
 const settingsButton = document.getElementById('settingsButton');
 const loginButton = document.getElementById('loginButton');
@@ -16,13 +26,32 @@ const createButton = document.getElementById('createButton');
 const logoutButton = document.getElementById('logoutButton');
 const createRouteButton = document.getElementById('createRoute');
 const cancelRouteButton = document.getElementById('cancelRoute');
+const createPlanButton = document.getElementById('createPlan');
 
 const rightNavbar = document.querySelector('.guac-navbar-bottom-right');
 const rightNavbarHidden = document.querySelector('.guac-navbar-bottom-right-hidden');
+const planNavbar = document.querySelector('.guac-navbar-bottom-plan-hidden');
+
+const validCities = ["Copenhagen", "Rome", "Paris", "London", "Berlin"];
+const cancelPlanButton = document.getElementById('cancelPlan');
+const cityDataList = document.getElementById('cityList');;
+
+const startPlanButton = document.getElementById('startPlanButton');
 
 settingsButton.addEventListener('click', (e) => {
     e.preventDefault();
     settingsOverlay.classList.add('active');
+    settingsOverlay.style.display = 'flex';
+});
+
+cancelPlanButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    createPlanOverlay.style.display = 'none';
+});
+
+cancelRouteButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    createRouteOverlay.style.display = 'none';
 });
 
 closeOverlay.addEventListener('click', (e) => {
@@ -34,7 +63,6 @@ startZoom.addEventListener('input', () => {
     zoomValue.textContent = startZoom.value;
 });
 
-loginOverlay.style.display = 'flex';
 createOverlay.style.display = 'none';
 
 createAccountButton.addEventListener('click', () => {
@@ -44,11 +72,6 @@ createAccountButton.addEventListener('click', () => {
 
 backToLoginButton.addEventListener('click', () => {
     createOverlay.style.display = 'none';
-    loginOverlay.style.display = 'flex';
-});
-
-cancelRouteButton.addEventListener('click', () => {
-    createRouteOverlay.style.display = 'none';
 });
 
 createRouteButton.addEventListener('click', async (e) => {
@@ -134,7 +157,6 @@ createButton.addEventListener('click', async (e) => {
         if (result.success) {
             showNotification("Konto oprettet! Du kan nu logge ind.", "success");
             createOverlay.style.display = 'none';
-            loginOverlay.style.display = 'flex';
         } else {
             showNotification(result.message || "Kunne ikke oprette konto", "danger");
         }
@@ -190,14 +212,6 @@ loginButton.addEventListener('click', async (e) => {
     } catch (err) {
         console.error("Request failed:", err);
         showNotification("Login request failed", "danger");
-    }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof loggedInUser !== "undefined" && loggedInUser) {
-        showNotification(`Welcome back, ${loggedInUser}!`, "success");
-        loginOverlay.style.display = 'none';
-        createOverlay.style.display = 'none';
     }
 });
 
@@ -270,7 +284,35 @@ startButton.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Skjul overlays som standard
+    createRouteOverlay.style.display = 'none';
+    createPlanOverlay.style.display = 'none';
+    createOverlay.style.display = 'none';
+    loginOverlay.style.display = 'none';
+
+    // Check login session
+    let loggedIn = false;
+    try {
+        const response = await fetch('php/check_session.php');
+        const result = await response.json();
+        if (result.loggedIn) {
+            loggedInUser = result.username || '';
+            loggedIn = true;
+        }
+    } catch (err) {
+        console.error('Failed to check login session:', err);
+    }
+
+    if (!loggedIn) {
+        loginOverlay.style.display = 'flex';
+    } else {
+        loginOverlay.style.display = 'none';
+        createOverlay.style.display = 'none';
+        showNotification(`Welcome back, ${loggedInUser}!`, 'success');
+    }
+
+    // Initialiser dropdown, wishButton mv.
     const wishButton = document.getElementById("wishButton");
     const wishDropdown = document.getElementById("wishDropdown");
     const wishText = wishButton.querySelector(".wish-text");
@@ -292,41 +334,93 @@ document.addEventListener("DOMContentLoaded", () => {
             e.stopPropagation();
 
             wishText.textContent = option.textContent;
-
             wishOptions.forEach(opt => opt.classList.remove("selected"));
             option.classList.add("selected");
-
             wishDropdown.classList.remove("active");
 
             const mode = option.dataset.mode;
-            currentMode = mode; 
+            currentMode = mode;
 
-            // Update pin icon
             updatePinIcon(mode);
             updateMapZoomForMode(mode);
 
-            if (mode === 'S') {
-                rightNavbar.style.display = 'none';              
-                rightNavbarHidden.style.display = 'flex';        
+            if (mode === 'P') {                        
+                planNavbar.style.display = 'flex';     
+                rightNavbar.style.display = 'none';    
             } else {
-                rightNavbar.style.display = 'flex';              
-                rightNavbarHidden.style.display = 'none';      
+                planNavbar.style.display = 'none';    
+                rightNavbar.style.display = 'flex';   
             }
+
+            rightNavbarHidden.style.display = (mode === 'S') ? 'flex' : 'none';
 
             try {
                 const response = await fetch(`php/get_pins.php?mode=${mode}`);
                 const pins = await response.json();
-
                 renderPinsOnMap(pins);
-
             } catch (err) {
                 console.error("Failed to fetch pins:", err);
             }
         });
     });
+});
 
+startPlanButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if (createPlanOverlay.style.display === 'none' || createPlanOverlay.style.display === '') {
+        createPlanOverlay.style.display = 'flex';
+        createPlanOverlay.scrollTop = 0;
+    } else {
+        createPlanOverlay.style.display = 'none';
+    }
+});
+
+createPlanButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('planTitle').value.trim();
+    const daysInput = document.getElementById('planDays').value.trim();
+    const city = document.getElementById('planCity').value.trim();
+    const description = document.getElementById('planDesc').value.trim();
+    const startDate = document.getElementById('planStartDate').value;
+    const endDate = document.getElementById('planEndDate').value;
+
+    const days = parseInt(daysInput, 10);
+
+    if (!title || !city || !days || !startDate || !endDate) {
+        showNotification('Please fill out all required fields correctly', 'danger');
+        return;
+    }
+
+    if (cityCoordinates[city]) {
+        map.setView(cityCoordinates[city], 10); 
+    } else {
+        showNotification("City not recognized. Zoom skipped.", "warning");
+    }
+
+    try {
+        const response = await fetch('php/create_plan.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, days, start_date: startDate, end_date: endDate, city, description })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showNotification('Trip created successfully!', 'success');
+            createPlanOverlay.style.display = 'none';
+        } else {
+            showNotification(result.message || 'Failed to create trip', 'danger');
+        }
+    } catch (err) {
+        console.error(err);
+        showNotification('Request failed', 'danger');
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
     createRouteOverlay.style.display = 'none';
+    createPlanOverlay.style.display = 'none';
 });

@@ -12,7 +12,7 @@ const HIT_RADIUS = 50;
 const MIN_DISTANCE = 30;
 const pinButton = document.querySelector('#pinButton');
 const eraserButton = document.querySelector('#eraserButton');
-const STANDARD_MAX_ZOOM = 12; // For V & BL
+const STANDARD_MAX_ZOOM = 14; // For V & BL
 const SPORT_MAX_ZOOM = 18; // For S & P
 
 /* ______________________________________ */ 
@@ -30,7 +30,7 @@ const map = L.map('map', {
 });
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: 'Travlr.dk | Build: 0.1.8 | Release at 1.0.0',
+    attribution: 'Travlr.dk | Build: 0.2.1 | Release at 1.0.0',
     subdomains: 'abcd',
     maxZoom: 15
 }).addTo(map);
